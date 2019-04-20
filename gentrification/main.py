@@ -82,23 +82,11 @@ if __name__ == '__main__':
   chart = ChartModule([
     {"Label": "Median Property Value", "Color": "Black"},
     {"Label": "Median Economic Status of Residents", "Color": "Red"},
-    {"Label": "Median Economic Status of Visitors", "Color": "Blue"}
-  ], data_collector_name='datacollector')
-
-  chart2 = ChartModule([
-    {"Label": "Vacant homes with high property value", "Color": "Black"}
-  ], data_collector_name='datacollector')
-
-  chart3 = ChartModule([
-    {"Label": "Median popularity of businesses", "Color": "Black"}
-  ], data_collector_name='datacollector')
-
-  chart4 = ChartModule([
-    {"Label": "Number of people sharing", "Color": "Black"}
-  ], data_collector_name='datacollector')
-
-  chart5 = ChartModule([
-    {"Label": "Median number of visitors to businesses", "Color": "Black"}
+    {"Label": "Median Economic Status of Visitors", "Color": "Blue"},
+    {"Label": "Vacant homes with high property value", "Color": "Green"},
+    {"Label": "Median popularity of businesses", "Color": "Purple"},
+    {"Label": "Number of people sharing", "Color": "Pink"},
+    {"Label": "Median number of visitors to businesses", "Color": "Orange"}
   ], data_collector_name='datacollector')
 
   n_slider = UserSettableParameter('slider', "Number of Initial Residents", 250, 100, 360, 10)
@@ -108,7 +96,7 @@ if __name__ == '__main__':
 
   server = ModularServer(
       m.Gentrified_Neighbourhood,
-      [grid, chart, chart2, chart3, chart4, chart5],
+      [grid, chart],
       "Gentrified Neighbourhood",
       {"N": 120, "I": n_slider, "J": p_slider, "R": h_slider, "C": c_slider, "S": 10, "width": 20, "height": 20})
 
