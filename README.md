@@ -22,7 +22,7 @@
 - [ ] Address people sharing on instragram
 
 
-## Expansion ##
+### Expansion ###
 - [ ] run *n* simulations on fixed params
 
 
