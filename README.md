@@ -1,7 +1,7 @@
 # GentrificationExpansion
 #### *Project for Dynamic Models in Biology. Expanding work done from a previous project to compare gentrification of neighborhoods with similar historical attributes.*
 
-* when you finish an item on the check list, check it off using a small x in between the brackets with no spaces. * 
+*when you finish an item on the check list, check it off using a small x in between the brackets with no spaces.* 
 
 ## Part 1 ##
 ### Make Cosmetic Improvements
