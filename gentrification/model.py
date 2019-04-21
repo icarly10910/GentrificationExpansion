@@ -13,20 +13,34 @@ import residential as r
 import street as s
 
 
-class Gentrified_Neighbourhood(Model):
-  def __init__(self, N, I, J, R, C, S, width, height):
+# TODO: Perhaps this should be defined in model as static member
+model_reporters = {
+  "Median popularity of businesses": helpers.med_pop,
+  "Number of people sharing": helpers.yelpers,
+  "Vacant homes with high property value": helpers.vacant_high,
+  "People on the Street": helpers.people_on_street,
+  "People in the Neighbourhood": helpers.people_in_neighbourhood,
+  "Median Property Value": helpers.med_property_value,
+  "Median Economic Status of Residents": helpers.med_econ_status_res,
+  "Median Economic Status of Visitors": helpers.med_econ_status_visitors,
+  "Median number of visitors to businesses": helpers.med_visits,
+}
+
+
+class GentrifiedNeighbourhood(Model):
+  def from_dict(self, d):
+    self.__dict__.update(d)
+
+  def __init__(self, num_people, people_outside, num_res, num_com, num_streets, width, height):
     super().__init__()
 
-    self.running = True
+    # num_people = people_inside + people_outside
+    self.people_inside = num_people - people_outside
+    self.people_outside = people_outside
 
-    self.num_people = N
-    # N = I + J
-    self.num_in_neighbourhood = I
-    self.num_out_neighbourhood = J
-
-    self.num_res = R
-    self.num_com = C
-    self.num_street = S
+    self.num_res = num_res
+    self.num_com = num_com
+    self.num_streets = num_streets
 
     self.schedule = RandomActivation(self)
     self.grid = MultiGrid(width, height, True)
@@ -83,7 +97,7 @@ class Gentrified_Neighbourhood(Model):
           placed = True
           sched += 1
 
-    for i in range(self.num_street):
+    for i in range(self.num_streets):
       a = s.Street(sched, self)
       placed = False
       while not placed:
@@ -100,7 +114,7 @@ class Gentrified_Neighbourhood(Model):
 
     homes = []
 
-    for i in range(self.num_in_neighbourhood):
+    for i in range(self.people_inside):
       a = p.Person(sched, self, True)
       placed = False
       while not placed:
@@ -123,7 +137,7 @@ class Gentrified_Neighbourhood(Model):
           placed = True
           sched += 1
 
-    for i in range(self.num_out_neighbourhood):
+    for i in range(self.people_outside):
       a = p.Person(sched, self, False)
       placed = False
       while not placed:
@@ -137,13 +151,7 @@ class Gentrified_Neighbourhood(Model):
           sched += 1
 
     self.datacollector = DataCollector(
-      model_reporters={"Median popularity of businesses": helpers.med_pop, "Number of people sharing": helpers.yelpers,
-                       "Vacant homes with high property value": helpers.vacant_high, "People on the Street": helpers.people_on_street,
-                       "People in the Neighbourhood": helpers.people_in_neighbourhood,
-                       "Median Property Value": helpers.med_property_value,
-                       "Median Economic Status of Residents": helpers.med_econ_status_res,
-                       "Median Economic Status of Visitors": helpers.med_econ_status_visitors,
-                       "Median number of visitors to businesses": helpers.med_visits})
+      model_reporters=model_reporters)
     # self.datacollector = DataCollector(
     #   model_reporters={"Median popularity of businesses": med_pop, "Vacant homes with high property value": vacant_high, "People on the Street": people_on_street, "People in the Neighbourhood": people_in_neighbourhood, "Median Property Value": med_property_value, "Median Economic Status of Residents": med_econ_status_res, "Median Economic Status of Visitors": med_econ_status_visitors, "Median number of visitors to businesses": med_visits} )
 

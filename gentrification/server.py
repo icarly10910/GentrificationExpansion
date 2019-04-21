@@ -89,16 +89,17 @@ if __name__ == '__main__':
     {"Label": "Median number of visitors to businesses", "Color": "Orange"}
   ], data_collector_name='datacollector')
 
-  n_slider = UserSettableParameter('slider', "Number of Initial Residents", 250, 100, 360, 10)
-  p_slider = UserSettableParameter('slider', "Number of People Outside the Neighbourhood", 100, 10, 700, 10)
-  h_slider = UserSettableParameter('slider', "Number of Homes", 260, 100, 360, 10)
-  c_slider = UserSettableParameter('slider', "Number of Businesses", 70, 20, 360, 10)
-
   server = ModularServer(
-      m.Gentrified_Neighbourhood,
+      m.GentrifiedNeighbourhood,
       [grid, chart],
       "Gentrified Neighbourhood",
-      {"N": 120, "I": n_slider, "J": p_slider, "R": h_slider, "C": c_slider, "S": 10, "width": 20, "height": 20})
+      { "num_people": UserSettableParameter('slider', "Number of Initial Residents", 250, 100, 360, 10),
+        "people_outside": UserSettableParameter('slider', "Number of People Outside the Neighbourhood", 100, 10, 700, 10),
+        "num_res": UserSettableParameter('slider', "Number of Homes", 260, 100, 360, 10),
+        "num_com": UserSettableParameter('slider', "Number of Businesses", 70, 20, 360, 10),
+        "num_streets": 10,
+        "width": 20,
+        "height": 20 })
 
   server.port = 8632
   server.launch()
