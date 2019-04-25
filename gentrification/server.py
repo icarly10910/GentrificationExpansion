@@ -103,6 +103,11 @@ if __name__ == '__main__':
         "num_streets": 10,
         "width": width,
         "height": height
+        # "num_people": 5,
+        # "people_outside": 5,
+        # "num_res": 3,
+        # "num_com": 4,
+        # "num_streets": 2,
       })
 
   server.port = 8632
