@@ -77,7 +77,9 @@ def agent_portrayal(agent):
 
 
 if __name__ == '__main__':
-  grid = CanvasGrid(agent_portrayal, 20, 20, 500, 500)
+  width = 20
+  height = 20
+  grid = CanvasGrid(agent_portrayal, width, height, 500, 500)
 
   chart = ChartModule([
     {"Label": "Median Property Value", "Color": "Black"},
@@ -93,13 +95,15 @@ if __name__ == '__main__':
       m.GentrifiedNeighbourhood,
       [grid, chart],
       "Gentrified Neighbourhood",
-      { "num_people": UserSettableParameter('slider', "Number of Initial Residents", 250, 100, 360, 10),
+      {
+        "num_people": UserSettableParameter('slider', "Number of Initial Residents", 250, 100, 360, 10),
         "people_outside": UserSettableParameter('slider', "Number of People Outside the Neighbourhood", 100, 10, 700, 10),
         "num_res": UserSettableParameter('slider', "Number of Homes", 260, 100, 360, 10),
         "num_com": UserSettableParameter('slider', "Number of Businesses", 70, 20, 360, 10),
         "num_streets": 10,
-        "width": 20,
-        "height": 20 })
+        "width": width,
+        "height": height
+      })
 
   server.port = 8632
   server.launch()

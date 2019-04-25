@@ -55,7 +55,6 @@ class GentrifiedNeighbourhood(Model):
         indices.append(count)
         count += 1
 
-    # print('len available:', len(available), 'len indicies:', len(indices))
     occupied = []
     res = []
     res_ind = []
@@ -150,10 +149,7 @@ class GentrifiedNeighbourhood(Model):
           placed = True
           sched += 1
 
-    self.datacollector = DataCollector(
-      model_reporters=model_reporters)
-    # self.datacollector = DataCollector(
-    #   model_reporters={"Median popularity of businesses": med_pop, "Vacant homes with high property value": vacant_high, "People on the Street": people_on_street, "People in the Neighbourhood": people_in_neighbourhood, "Median Property Value": med_property_value, "Median Economic Status of Residents": med_econ_status_res, "Median Economic Status of Visitors": med_econ_status_visitors, "Median number of visitors to businesses": med_visits} )
+    self.datacollector = DataCollector(model_reporters=model_reporters)
 
   def step(self):
     self.datacollector.collect(self)

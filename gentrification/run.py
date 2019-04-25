@@ -6,13 +6,13 @@ import model as m
 if __name__ == '__main__':
   batch_runner = BatchRunner(m.GentrifiedNeighbourhood,
     fixed_parameters={
-      "num_people": 250,
-      "people_outside": 100,
-      "num_res": 260,
-      "num_com": 70,
-      "num_streets": 10,
-      "width": 20,
-      "height": 20
+      "num_people": 5,
+      "people_outside": 2,
+      "num_res": 3,
+      "num_com": 4,
+      "num_streets": 2,
+      "width": 5,
+      "height": 5
     },
     iterations=10,
     max_steps=10,
