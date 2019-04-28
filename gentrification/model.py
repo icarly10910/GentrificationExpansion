@@ -17,13 +17,25 @@ import street as s
 model_reporters = {
   "Median popularity of businesses": helpers.med_pop,
   "Number of people sharing": helpers.yelpers,
-  "Vacant homes with high property value": helpers.vacant_high,
+  "Fraction of vacant homes with high property value": helpers.fraction_vacant_high,
   "People on the Street": helpers.people_on_street,
   "People in the Neighbourhood": helpers.people_in_neighbourhood,
   "Median Property Value": helpers.med_property_value,
   "Median Economic Status of Residents": helpers.med_econ_status_res,
   "Median Economic Status of Visitors": helpers.med_econ_status_visitors,
   "Median number of visitors to businesses": helpers.med_visits,
+  "Mean Property Value":
+    lambda model: np.mean([agent.property_value for agent in model.schedule.agents if
+      isinstance(agent, r.Residential)]),
+  "Mean Economic Status of Residents":
+    lambda model: np.mean([agent.econ_status for agent in model.schedule.agents if
+      isinstance(agent, p.Person) and agent.resident_status]),
+  "Mean Economic Status of Visitors":
+    lambda model: np.mean([agent.econ_status for agent in model.schedule.agents if
+      isinstance(agent, p.Person) and not agent.resident_status and agent.in_neighbourhood]),
+  "Mean number of visitors to businesses":
+    lambda model: np.mean([bus.number_of_visitors for bus in model.schedule.agents if
+      isinstance(bus, c.Commercial)]),
 }
 
 

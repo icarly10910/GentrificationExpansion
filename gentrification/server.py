@@ -98,7 +98,7 @@ if __name__ == '__main__':
     {"Label": "Median Property Value", "Color": "Black"},
     {"Label": "Median Economic Status of Residents", "Color": "Red"},
     {"Label": "Median Economic Status of Visitors", "Color": "Blue"},
-    {"Label": "Vacant homes with high property value", "Color": "Green"},
+    {"Label": "Fraction of vacant homes with high property value", "Color": "Green"},
     {"Label": "Median popularity of businesses", "Color": "Purple"},
     {"Label": "Number of people sharing", "Color": "Pink"},
     {"Label": "Median number of visitors to businesses", "Color": "Orange"}

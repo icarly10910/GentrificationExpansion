@@ -74,7 +74,11 @@ def med_pop(model):
   return np.median(bus_pop)
 
 
-def vacant_high(model):
-  properties = [prop for prop in model.schedule.agents if
-                isinstance(prop, r.Residential) and prop.vacancy and prop.property_value == 2]
-  return len(properties)
+def fraction_vacant_high(model):
+  total = high_vacant = 0
+  for prop in model.schedule.agents:
+    if isinstance(prop, r.Residential):
+      total += 1
+      if prop.vacancy and prop.property_value == 2:
+        high_vacant += 1
+  return float(high_vacant) / total
