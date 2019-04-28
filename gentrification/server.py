@@ -95,13 +95,13 @@ def agent_portrayal(agent):
 
 if __name__ == '__main__':
   chart = ChartModule([
-    {"Label": "Median Property Value", "Color": "Black"},
-    {"Label": "Median Economic Status of Residents", "Color": "Red"},
-    {"Label": "Median Economic Status of Visitors", "Color": "Blue"},
+    {"Label": "Mean Property Value", "Color": "Black"},
+    {"Label": "Mean Economic Status of Residents", "Color": "Red"},
+    {"Label": "Mean Economic Status of Visitors", "Color": "Blue"},
     {"Label": "Fraction of vacant homes with high property value", "Color": "Green"},
     {"Label": "Median popularity of businesses", "Color": "Purple"},
     {"Label": "Number of people sharing", "Color": "Pink"},
-    {"Label": "Median number of visitors to businesses", "Color": "Orange"}
+    {"Label": "Mean number of visitors to businesses", "Color": "Orange"}
   ], data_collector_name='datacollector')
 
   width = 20

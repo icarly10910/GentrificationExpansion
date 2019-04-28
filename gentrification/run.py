@@ -32,8 +32,11 @@ def plot_dependence(run_data, var):
 
   for reporter in [
     'Median Property Value',
+    'Mean Property Value',
     'Median Economic Status of Residents',
+    'Mean Economic Status of Residents',
     'Median Economic Status of Visitors',
+    'Mean Economic Status of Visitors',
     'Fraction of vacant homes with high property value',
   ]:
     print(run_data.set_index([var, reporter]))
