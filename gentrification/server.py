@@ -9,6 +9,10 @@ import residential as r
 import street as s
 import model as m
 
+
+status_strings = {0: 'L', 1: 'M', 2: 'H'}
+
+
 def agent_portrayal(agent):
   if agent is None:
     return
@@ -17,8 +21,12 @@ def agent_portrayal(agent):
                "Filled": "true",
                "r": 0.5}
 
+  portrayal["text_color"] = "black"
+
   if type(agent) is p.Person:
+    portrayal["text"] = "P %s" % status_strings[agent.econ_status]
     portrayal["Layer"] = 1
+
     portrayal["r"] = 0.4
     # if agent.yelped:
     #   portrayal["Color"] = "black"
@@ -26,31 +34,39 @@ def agent_portrayal(agent):
       portrayal["Color"] = "#A9F5A9"
     elif agent.econ_status == 1:
       portrayal["Color"] = "#01DF01"
-    elif agent.econ_status == 2:
-      portrayal["Color"] = "#088A08"
     else:
-      portrayal["Shape"] = "rect"
-      portrayal["Color"] = "black"
+      portrayal["Color"] = "#088A08"
+    # else:
+    #   portrayal["Shape"] = "rect"
+    #   portrayal["Color"] = "black"
 
   elif type(agent) is r.Residential:
+    portrayal["text"] = "%s %s" % ('V' if agent.vacancy else 'R', status_strings[agent.property_value])
     portrayal["Shape"] = "rect"
     portrayal["Layer"] = 0
     portrayal["w"] = 1
     portrayal["h"] = 1
     if agent.vacancy:
-      portrayal["Color"] = "white"
-    elif agent.property_value == 0:
-      portrayal["Color"] = "#E3CEF6"
-    elif agent.property_value == 1:
-      portrayal["Color"] = "#BE81F7"
-    elif agent.property_value == 2:
-      portrayal["Color"] = "#7401DF"
+      if agent.property_value == 0:
+        portrayal["Color"] = "#B3CDE0"
+      elif agent.property_value == 1:
+        portrayal["Color"] = "#6497B1"
+      else:
+        portrayal["Color"] = "#005B96"
     else:
-      portrayal["Shape"] = "circle"
-      portrayal["Color"] = "#7401DF"
-      portrayal["r"] = 0.7
+      if agent.property_value == 0:
+        portrayal["Color"] = "#E3CEF6"
+      elif agent.property_value == 1:
+        portrayal["Color"] = "#BE81F7"
+      else:
+        portrayal["Color"] = "#7401DF"
+    # else:
+    #   portrayal["Shape"] = "circle"
+    #   portrayal["Color"] = "#7401DF"
+    #   portrayal["r"] = 0.7
 
   elif type(agent) is c.Commercial:
+    portrayal["text"] = "C %s" % status_strings[agent.econ_status]
     portrayal["Shape"] = "rect"
     portrayal["Layer"] = 0
     portrayal["w"] = 1
@@ -59,14 +75,15 @@ def agent_portrayal(agent):
       portrayal["Color"] = "#F6CECE"
     elif agent.econ_status == 1:
       portrayal["Color"] = "#F78181"
-    elif agent.econ_status == 2:
-      portrayal["Color"] = "#DF0101"
     else:
-      portrayal["Shape"] = "circle"
       portrayal["Color"] = "#DF0101"
-      portrayal["r"] = 0.7
+    # else:
+    #   portrayal["Shape"] = "circle"
+    #   portrayal["Color"] = "#DF0101"
+    #   portrayal["r"] = 0.7
 
   elif type(agent) is s.Street:
+    portrayal["text"] = "S"
     portrayal["Color"] = "grey"
     portrayal["Shape"] = "rect"
     portrayal["Layer"] = 0
@@ -77,10 +94,6 @@ def agent_portrayal(agent):
 
 
 if __name__ == '__main__':
-  width = 20
-  height = 20
-  grid = CanvasGrid(agent_portrayal, width, height, 500, 500)
-
   chart = ChartModule([
     {"Label": "Median Property Value", "Color": "Black"},
     {"Label": "Median Economic Status of Residents", "Color": "Red"},
@@ -90,6 +103,10 @@ if __name__ == '__main__':
     {"Label": "Number of people sharing", "Color": "Pink"},
     {"Label": "Median number of visitors to businesses", "Color": "Orange"}
   ], data_collector_name='datacollector')
+
+  width = 20
+  height = 20
+  grid = CanvasGrid(agent_portrayal, width, height, 500, 500)
 
   server = ModularServer(
       m.GentrifiedNeighbourhood,
@@ -104,10 +121,12 @@ if __name__ == '__main__':
         "width": width,
         "height": height
         # "num_people": 5,
-        # "people_outside": 5,
+        # "people_outside": UserSettableParameter('slider', "Number of People Outside the Neighbourhood", 2, 2, 8, 1), #range(2, 8, 1),
         # "num_res": 3,
         # "num_com": 4,
         # "num_streets": 2,
+        # "width": width,
+        # "height": height
       })
 
   server.port = 8632

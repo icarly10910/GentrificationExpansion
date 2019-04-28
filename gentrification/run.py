@@ -48,7 +48,7 @@ def run():
       "height": 5
     },
     variable_parameters={
-      "people_outside": range(2, 8, 1)
+      "people_outside": range(2, 6, 1)
     },
     iterations=10,
     max_steps=3,
@@ -63,8 +63,8 @@ def run():
 if __name__ == '__main__':
   run_data = run()
 
-  plot_everything(run_data)
-  plot_key_measures(run_data)
+  # plot_everything(run_data)
+  # plot_key_measures(run_data)
   plot_dependence(run_data, 'people_outside')
 
   plt.show()
