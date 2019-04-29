@@ -12,18 +12,27 @@ def decision(probability):
   return random.random() < probability
 
 
+def econ_status_choice(dist_mean):
+  return min(2, max(0, int(round(np.random.normal(dist_mean, scale=1)))))
+
+
 class Person(Agent):
   """ An agent with fixed initial wealth."""
 
-  def __init__(self, unique_id, model, IN=True):
+  def __init__(self, unique_id, model, inside_neighborhood=True):
     super().__init__(unique_id, model)
     self.yelped = False
-    if IN:
-      self.econ_status = np.random.choice([0, 1, 2],
-                                          p=[0.6, 0.3, 0.1])  # RANDOM INITIALIZATION OF ECONOMIC STATUS. CAN CHANGE.
-    else:
-      self.econ_status = np.random.choice([0, 1, 2],
-                                          p=[0.2, 0.3, 0.5])  # RANDOM INITIALIZATION OF ECONOMIC STATUS. CAN CHANGE.
+    # if inside_neighborhood:
+      # self.econ_status = np.random.choice([0, 1, 2],
+      #                                     p=[0.6, 0.3, 0.1])  # RANDOM INITIALIZATION OF ECONOMIC STATUS. CAN CHANGE.
+      # # Choose value from normal distribution with mean i, stddev 1, round to int, limit to range [0, 2]
+      # self.econ_status = 2 #econ_status_choice(model.inside_person_econ_dist_mean)
+    # else:
+      # self.econ_status = np.random.choice([0, 1, 2],
+      #                                     p=[0.2, 0.3, 0.5])  # RANDOM INITIALIZATION OF ECONOMIC STATUS. CAN CHANGE.
+    if not inside_neighborhood:
+      self.econ_status = econ_status_choice(model.outside_person_econ_dist_mean)
+
     self.prob_enter = np.random.normal(0.3, 0.15)
 
   def buy_or_sell(self):
@@ -104,7 +113,7 @@ class Person(Agent):
       if store.econ_status <= self.econ_status:
         self.model.grid.move_agent(self, store.pos)
         self.prob_enter = self.prob_enter * 1.2  # increase probability of entering
-        if store.popularity > 0.7:
+        if store.popularity > self.model.share_threshold:
           sh = np.random.choice([0, 1], p=[0.8, 0.2])
           if sh == 0:
             self.share(store)
@@ -126,6 +135,7 @@ class Person(Agent):
       b.prob_enter = pyelp
 
   def step(self):
+    # self.yelped = False
     action = np.random.choice([0, 1, 2, 3], p=[0.15, 0.3, 0.4, 0.15])
     if action == 0:
       self.buy_or_sell()

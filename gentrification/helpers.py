@@ -58,10 +58,14 @@ def med_econ_status_visitors(model):
 
 
 def yelpers(model):
-  yelpers = [agent for agent in model.schedule.agents if isinstance(agent, p.Person) and agent.yelped]
-  for agent in yelpers:
+  people = [agent for agent in model.schedule.agents if isinstance(agent, p.Person) and agent.yelped]
+  for agent in people:
     agent.yelped = False
-  return len(yelpers)
+  return len(people)
+
+
+def fraction_yelpers(model):
+  return yelpers(model) / model.num_people
 
 
 def med_visits(model):

@@ -101,9 +101,12 @@ if __name__ == '__main__':
     {"Label": "Fraction of vacant homes with high property value", "Color": "Green"},
     {"Label": "Median popularity of businesses", "Color": "Purple"},
     {"Label": "Number of people sharing", "Color": "Pink"},
-    {"Label": "Mean number of visitors to businesses", "Color": "Orange"}
+    {"Label": "Fraction of people sharing", "Color": "Black"},
+    {"Label": "Median number of visitors to businesses", "Color": "Orange"}
   ], data_collector_name='datacollector')
 
+  # width = 5
+  # height = 5
   width = 20
   height = 20
   grid = CanvasGrid(agent_portrayal, width, height, 500, 500)
@@ -114,14 +117,21 @@ if __name__ == '__main__':
       "Gentrified Neighbourhood",
       {
         "num_people": UserSettableParameter('slider', "Number of Initial Residents", 250, 100, 360, 10),
-        "people_outside": UserSettableParameter('slider', "Number of People Outside the Neighbourhood", 100, 10, 700, 10),
-        "num_res": UserSettableParameter('slider', "Number of Homes", 260, 100, 360, 10),
-        "num_com": UserSettableParameter('slider', "Number of Businesses", 70, 20, 360, 10),
+        "people_outside": UserSettableParameter('slider',
+          "Number of People Outside the Neighbourhood", 100, 10, 700, 10),
+        "outside_person_econ_dist_mean": UserSettableParameter('slider',
+          "Mean Economic Distribution for People Outside", 1, 0, 2, 0.1),
+        "share_threshold": UserSettableParameter('slider',
+          "Store popularity threshold for Yelping", 0.7, 0, 1, 0.1),
+        "num_residential": UserSettableParameter('slider', "Number of Homes", 260, 100, 360, 10),
+        "num_commercial": UserSettableParameter('slider', "Number of Businesses", 70, 20, 360, 10),
         "num_streets": 10,
         "width": width,
         "height": height
         # "num_people": 5,
         # "people_outside": UserSettableParameter('slider', "Number of People Outside the Neighbourhood", 2, 2, 8, 1), #range(2, 8, 1),
+        # "inside_person_econ_dist_mean": 2,
+        # "outside_person_econ_dist_mean": 1,
         # "num_res": 3,
         # "num_com": 4,
         # "num_streets": 2,

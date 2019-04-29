@@ -12,11 +12,13 @@ import person as p
 import residential as r
 import street as s
 
+import matplotlib.pyplot as plt
 
 # TODO: Perhaps this should be defined in model as static member
 model_reporters = {
   "Median popularity of businesses": helpers.med_pop,
   "Number of people sharing": helpers.yelpers,
+  "Fraction of people sharing": helpers.fraction_yelpers,
   "Fraction of vacant homes with high property value": helpers.fraction_vacant_high,
   "People on the Street": helpers.people_on_street,
   "People in the Neighbourhood": helpers.people_in_neighbourhood,
@@ -36,6 +38,9 @@ model_reporters = {
   "Mean number of visitors to businesses":
     lambda model: np.mean([bus.number_of_visitors for bus in model.schedule.agents if
       isinstance(bus, c.Commercial)]),
+  "Fraction of people in the neighborhood":
+    lambda model: float(len([agent for agent in model.schedule.agents if
+      isinstance(agent, p.Person) and agent.in_neighbourhood])) / model.num_people
 }
 
 
@@ -43,15 +48,17 @@ class GentrifiedNeighbourhood(Model):
   def from_dict(self, d):
     self.__dict__.update(d)
 
-  def __init__(self, num_people, people_outside, num_res, num_com, num_streets, width, height):
+  def __init__(self, num_people, people_outside, outside_person_econ_dist_mean, share_threshold,
+      num_residential, num_commercial, num_streets, width, height):
     super().__init__()
 
-    # num_people = people_inside + people_outside
+    self.num_people = num_people
     self.people_inside = num_people - people_outside
     self.people_outside = people_outside
-
-    self.num_res = num_res
-    self.num_com = num_com
+    self.outside_person_econ_dist_mean = outside_person_econ_dist_mean
+    self.share_threshold = share_threshold
+    self.num_residential = num_residential
+    self.num_commercial = num_commercial
     self.num_streets = num_streets
 
     self.schedule = RandomActivation(self)
@@ -72,7 +79,7 @@ class GentrifiedNeighbourhood(Model):
     res_ind = []
     count = 0
     sched = 0
-    for i in range(self.num_res):  # place residences randomly
+    for i in range(self.num_residential):  # place residences randomly
       a = r.Residential(sched, self)
       placed = False
       while not placed:
@@ -93,7 +100,7 @@ class GentrifiedNeighbourhood(Model):
         else:
           print('something wrong 1')
 
-    for i in range(self.num_com):  # place commercial randomly
+    for i in range(self.num_commercial):  # place commercial randomly
       a = c.Commercial(sched, self)
       placed = False
       while not placed:
@@ -160,6 +167,17 @@ class GentrifiedNeighbourhood(Model):
           a.in_neighbourhood = False
           placed = True
           sched += 1
+
+    # DEBUG: Plot econ status distros
+    # econ_inside = [person.econ_status for person in self.schedule.agents if
+    #   isinstance(person, p.Person) and person.in_neighbourhood]
+    # econ_outside = [person.econ_status for person in self.schedule.agents if
+    #   isinstance(person, p.Person) and not person.in_neighbourhood]
+    #
+    # plt.hist(econ_inside)
+    # plt.figure()
+    # plt.hist(econ_outside)
+    # plt.show()
 
     self.datacollector = DataCollector(model_reporters=model_reporters)
 
