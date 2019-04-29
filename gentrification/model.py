@@ -14,7 +14,6 @@ import street as s
 
 import matplotlib.pyplot as plt
 
-# TODO: Perhaps this should be defined in model as static member
 model_reporters = {
   "Median popularity of businesses": helpers.med_pop,
   "Number of people sharing": helpers.yelpers,
@@ -49,7 +48,7 @@ class GentrifiedNeighbourhood(Model):
     self.__dict__.update(d)
 
   def __init__(self, people_inside, people_outside, outside_person_econ_dist_mean, share_threshold,
-      num_residential, num_commercial, num_streets, width, height):
+      property_value_dist_mean, num_residential, num_commercial, num_streets, width, height):
     super().__init__()
 
     self.people_inside = int(people_inside)
@@ -57,6 +56,7 @@ class GentrifiedNeighbourhood(Model):
     self.num_people = people_inside + people_outside
     self.outside_person_econ_dist_mean = outside_person_econ_dist_mean
     self.share_threshold = share_threshold
+    self.property_value_dist_mean = property_value_dist_mean
     self.num_residential = int(num_residential)
     self.num_commercial = int(num_commercial)
     self.num_streets = int(num_streets)

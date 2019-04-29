@@ -86,3 +86,7 @@ def fraction_vacant_high(model):
       if prop.vacancy and prop.property_value == 2:
         high_vacant += 1
   return float(high_vacant) / total
+
+
+def econ_status_choice(dist_mean):
+  return min(2, max(0, int(round(np.random.normal(dist_mean, scale=1)))))

@@ -54,7 +54,7 @@ def plot_dependence(run_data, fixed_parameters, var):
   plt.text(0.05, 0.95, params_string, transform=plt.axes().transAxes, #fontsize=12,
     verticalalignment='top', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
-  plt.legend()
+  plt.legend(loc='upper center')
 
 
 def run(variable_key, variable_value):
@@ -63,6 +63,7 @@ def run(variable_key, variable_value):
     "people_outside": 100,
     "outside_person_econ_dist_mean": 1.0,
     "share_threshold": 0.7,
+    "property_value_dist_mean": 0.0,
     "num_residential": 250,
     "num_commercial": 50,
     "num_streets": 10,
@@ -91,12 +92,12 @@ if __name__ == '__main__':
     "people_outside": np.linspace(0, 500, 5),
     "num_residential": np.linspace(200, 320, 5),
     "num_commercial": np.linspace(10, 120, 5),
+    "property_value_dist_mean": np.linspace(0.0, 2.0, 5),
   }
   num_rows = len(variable_parameters.items())
 
   for i, (variable_key, variable_value) in enumerate(variable_parameters.items()):
     runner = run(variable_key, variable_value)
-    plot_dependence(runner.get_model_vars_dataframe(),
-      runner.fixed_parameters, variable_key)
+    plot_dependence(runner.get_model_vars_dataframe(), runner.fixed_parameters, variable_key)
 
   plt.show()

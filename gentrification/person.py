@@ -8,12 +8,9 @@ import helpers
 import residential as r
 import street as s
 
+
 def decision(probability):
   return random.random() < probability
-
-
-def econ_status_choice(dist_mean):
-  return min(2, max(0, int(round(np.random.normal(dist_mean, scale=1)))))
 
 
 class Person(Agent):
@@ -31,7 +28,7 @@ class Person(Agent):
       # self.econ_status = np.random.choice([0, 1, 2],
       #                                     p=[0.2, 0.3, 0.5])  # RANDOM INITIALIZATION OF ECONOMIC STATUS. CAN CHANGE.
     if not inside_neighborhood:
-      self.econ_status = econ_status_choice(model.outside_person_econ_dist_mean)
+      self.econ_status = helpers.econ_status_choice(model.outside_person_econ_dist_mean)
 
     self.prob_enter = np.random.normal(0.3, 0.15)
 
@@ -63,11 +60,6 @@ class Person(Agent):
           self.resident_status = False
           self.in_neighbourhood = False
           home.vacancy = True
-        # aa = home.vacancies
-        # if home.vacancy:
-        #    home.vacancies = np.hstack((aa, np.asarray(0)))
-        # else:
-        #    home.vacancies = np.hstack((aa, np.asarray(1)))
 
       if not self.resident_status:
         residences = [res for res in self.model.schedule.agents if isinstance(res, r.Residential)]
