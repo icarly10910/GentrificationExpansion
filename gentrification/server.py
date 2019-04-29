@@ -116,7 +116,7 @@ if __name__ == '__main__':
       [grid, chart],
       "Gentrified Neighbourhood",
       {
-        "num_people": UserSettableParameter('slider', "Number of Initial Residents", 250, 100, 360, 10),
+        "people_inside": UserSettableParameter('slider', "Number of Initial Residents", 250, 100, 360, 10),
         "people_outside": UserSettableParameter('slider',
           "Number of People Outside the Neighbourhood", 100, 10, 700, 10),
         "outside_person_econ_dist_mean": UserSettableParameter('slider',

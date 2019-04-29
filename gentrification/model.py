@@ -48,18 +48,18 @@ class GentrifiedNeighbourhood(Model):
   def from_dict(self, d):
     self.__dict__.update(d)
 
-  def __init__(self, num_people, people_outside, outside_person_econ_dist_mean, share_threshold,
+  def __init__(self, people_inside, people_outside, outside_person_econ_dist_mean, share_threshold,
       num_residential, num_commercial, num_streets, width, height):
     super().__init__()
 
-    self.num_people = num_people
-    self.people_inside = num_people - people_outside
-    self.people_outside = people_outside
+    self.people_inside = int(people_inside)
+    self.people_outside = int(people_outside)
+    self.num_people = people_inside + people_outside
     self.outside_person_econ_dist_mean = outside_person_econ_dist_mean
     self.share_threshold = share_threshold
-    self.num_residential = num_residential
-    self.num_commercial = num_commercial
-    self.num_streets = num_streets
+    self.num_residential = int(num_residential)
+    self.num_commercial = int(num_commercial)
+    self.num_streets = int(num_streets)
 
     self.schedule = RandomActivation(self)
     self.grid = MultiGrid(width, height, True)

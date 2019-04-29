@@ -57,23 +57,25 @@ def plot_dependence(run_data, fixed_parameters, var):
   plt.legend()
 
 
-def run():
+def run(variable_key, variable_value):
+  fixed_parameters = {
+    "people_inside": 200,
+    "people_outside": 100,
+    "outside_person_econ_dist_mean": 1.0,
+    "share_threshold": 0.7,
+    "num_residential": 250,
+    "num_commercial": 50,
+    "num_streets": 10,
+    "width": 20,
+    "height": 20
+  }
+
+  # Remove variable parameters from fixed parameters
+  del fixed_parameters[variable_key]
+
   runner = BatchRunner(m.GentrifiedNeighbourhood,
-    fixed_parameters={
-      "num_people": 250,
-      "people_outside": 100,
-      "outside_person_econ_dist_mean": 1.0,
-      # "share_threshold": 0.7,
-      "num_residential": 260,
-      "num_commercial": 70,
-      "num_streets": 10,
-      "width": 20,
-      "height": 20
-    },
-    variable_parameters={
-      # "outside_person_econ_dist_mean": np.arange(0.0, 2.0, 1.0)
-      "share_threshold": np.linspace(0.0, 1.0, num=5)
-    },
+    fixed_parameters=fixed_parameters,
+    variable_parameters={variable_key: variable_value},
     iterations=1,
     max_steps=20,
     model_reporters=m.model_reporters)
@@ -83,13 +85,16 @@ def run():
 
 
 if __name__ == '__main__':
-  runner = run()
+  variable_parameters = {
+    "outside_person_econ_dist_mean": np.linspace(0.0, 2.0, 5),
+    "share_threshold": np.linspace(0.0, 1.0, 5),
+    "people_outside": np.linspace(0, 500, 5),
+    "num_residential": np.linspace(200, 320, 5),
+  }
 
-  # plot_everything(run_data)
-  # plot_key_measures(run_data)
+  for variable_key, variable_value in variable_parameters.items():
+    runner = run(variable_key, variable_value)
+    plot_dependence(runner.get_model_vars_dataframe(),
+      runner.fixed_parameters, variable_key)
 
-  # plot_dependence(runner.get_model_vars_dataframe(),
-  #   runner.fixed_parameters, 'outside_person_econ_dist_mean')
-  plot_dependence(runner.get_model_vars_dataframe(),
-    runner.fixed_parameters, 'share_threshold')
   plt.show()
