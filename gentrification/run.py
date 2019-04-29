@@ -40,8 +40,8 @@ def plot_dependence(run_data, fixed_parameters, var):
     'Mean Property Value',
     # 'Median Economic Status of Residents',
     'Mean Economic Status of Residents',
-    # 'Median Economic Status of Visitors',
-    'Mean number of visitors to businesses',
+    'Mean Economic Status of Visitors',
+    # 'Mean number of visitors to businesses',
     'Fraction of people in the neighborhood',
     'Fraction of vacant homes with high property value',
   ]:
@@ -77,7 +77,7 @@ def run(variable_key, variable_value):
     fixed_parameters=fixed_parameters,
     variable_parameters={variable_key: variable_value},
     iterations=1,
-    max_steps=20,
+    max_steps=5,
     model_reporters=m.model_reporters)
 
   runner.run_all()
@@ -90,9 +90,11 @@ if __name__ == '__main__':
     "share_threshold": np.linspace(0.0, 1.0, 5),
     "people_outside": np.linspace(0, 500, 5),
     "num_residential": np.linspace(200, 320, 5),
+    "num_commercial": np.linspace(10, 120, 5),
   }
+  num_rows = len(variable_parameters.items())
 
-  for variable_key, variable_value in variable_parameters.items():
+  for i, (variable_key, variable_value) in enumerate(variable_parameters.items()):
     runner = run(variable_key, variable_value)
     plot_dependence(runner.get_model_vars_dataframe(),
       runner.fixed_parameters, variable_key)
