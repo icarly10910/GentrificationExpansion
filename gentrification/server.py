@@ -21,10 +21,10 @@ def agent_portrayal(agent):
                "Filled": "true",
                "r": 0.5}
 
-  portrayal["text_color"] = "black"
+  # portrayal["text_color"] = "black"
 
   if type(agent) is p.Person:
-    portrayal["text"] = "P %s" % status_strings[agent.econ_status]
+    # portrayal["text"] = "%s" % status_strings[agent.econ_status]
     portrayal["Layer"] = 1
 
     portrayal["r"] = 0.4
@@ -41,7 +41,7 @@ def agent_portrayal(agent):
     #   portrayal["Color"] = "black"
 
   elif type(agent) is r.Residential:
-    portrayal["text"] = "%s %s" % ('V' if agent.vacancy else 'R', status_strings[agent.property_value])
+    # portrayal["text"] = "%s %s" % ('V' if agent.vacancy else 'R', status_strings[agent.property_value])
     portrayal["Shape"] = "rect"
     portrayal["Layer"] = 0
     portrayal["w"] = 1
@@ -66,7 +66,7 @@ def agent_portrayal(agent):
     #   portrayal["r"] = 0.7
 
   elif type(agent) is c.Commercial:
-    portrayal["text"] = "C %s" % status_strings[agent.econ_status]
+    # portrayal["text"] = "C %s" % status_strings[agent.econ_status]
     portrayal["Shape"] = "rect"
     portrayal["Layer"] = 0
     portrayal["w"] = 1
