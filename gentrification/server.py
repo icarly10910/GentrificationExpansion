@@ -100,9 +100,9 @@ if __name__ == '__main__':
     {"Label": "Mean Economic Status of Visitors", "Color": "Blue"},
     {"Label": "Fraction of vacant homes with high property value", "Color": "Green"},
     {"Label": "Median popularity of businesses", "Color": "Purple"},
-    {"Label": "Number of people sharing", "Color": "Pink"},
+    # {"Label": "Number of people sharing", "Color": "Pink"},
     {"Label": "Fraction of people sharing", "Color": "Black"},
-    {"Label": "Median number of visitors to businesses", "Color": "Orange"}
+    # {"Label": "Median number of visitors to businesses", "Color": "Orange"}
   ], data_collector_name='datacollector')
 
   # width = 5
@@ -122,7 +122,7 @@ if __name__ == '__main__':
         "outside_person_econ_dist_mean": UserSettableParameter('slider',
           "Mean of Economic Distribution for People Outside", 1, 0, 2, 0.1),
         "share_threshold": UserSettableParameter('slider',
-          "Store popularity threshold for Yelping", 0.7, 0, 1, 0.1),
+          "Store Popularity Threshold for Yelping", 0.7, 0, 1, 0.1),
         "property_value_dist_mean": UserSettableParameter('slider',
           "Mean of Property Value Distribution for Homes", 0, 0, 2, 0.1),
         "num_residential": UserSettableParameter('slider', "Number of Homes", 260, 100, 360, 10),
