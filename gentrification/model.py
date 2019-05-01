@@ -39,7 +39,10 @@ model_reporters = {
       isinstance(bus, c.Commercial)]),
   "Fraction of people in the neighborhood":
     lambda model: float(len([agent for agent in model.schedule.agents if
-      isinstance(agent, p.Person) and agent.in_neighbourhood])) / model.num_people
+      isinstance(agent, p.Person) and agent.in_neighbourhood])) / model.num_people,
+  "Fraction of people who are residents":
+    lambda model: float(len([agent for agent in model.schedule.agents if
+      isinstance(agent, p.Person) and agent.resident_status])) / model.num_people
 }
 
 

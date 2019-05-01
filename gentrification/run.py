@@ -60,7 +60,7 @@ def plot_dependence(run_data, fixed_parameters, var):
 def run(variable_key, variable_value):
   fixed_parameters = {
     "people_inside": 200,
-    "people_outside": 100,
+    "people_outside": 200,
     "outside_person_econ_dist_mean": 1.0,
     "share_threshold": 0.7,
     "property_value_dist_mean": 0.0,
@@ -77,8 +77,8 @@ def run(variable_key, variable_value):
   runner = BatchRunner(m.GentrifiedNeighbourhood,
     fixed_parameters=fixed_parameters,
     variable_parameters={variable_key: variable_value},
-    iterations=1,
-    max_steps=50,
+    iterations=10,
+    max_steps=20,
     model_reporters=m.model_reporters)
 
   runner.run_all()
@@ -87,7 +87,7 @@ def run(variable_key, variable_value):
 
 if __name__ == '__main__':
   variable_parameters = {
-    "outside_person_econ_dist_mean": np.linspace(0.0, 2.0, 10),
+    # "outside_person_econ_dist_mean": np.linspace(0.0, 2.0, 10),
     "share_threshold": np.linspace(0.0, 1.0, 10),
     "people_outside": np.linspace(0, 500, 10),
     "num_residential": np.linspace(200, 320, 10),
