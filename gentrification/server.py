@@ -48,11 +48,11 @@ def agent_portrayal(agent):
     portrayal["h"] = 1
     if agent.vacancy:
       if agent.property_value == 0:
-        portrayal["Color"] = "#B3CDE0"
+        portrayal["Color"] = "#FFFFE0"
       elif agent.property_value == 1:
-        portrayal["Color"] = "#6497B1"
+        portrayal["Color"] = "#EEE8AA"
       else:
-        portrayal["Color"] = "#005B96"
+        portrayal["Color"] = "#FFFF00"
     else:
       if agent.property_value == 0:
         portrayal["Color"] = "#E3CEF6"
