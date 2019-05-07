@@ -87,11 +87,11 @@ def run(variable_key, variable_value):
 
 if __name__ == '__main__':
   variable_parameters = {
-    # "outside_person_econ_dist_mean": np.linspace(0.0, 2.0, 10),
+    "outside_person_econ_dist_mean": np.linspace(0.0, 2.0, 10),
     "share_threshold": np.linspace(0.0, 1.0, 10),
     "people_outside": np.linspace(0, 500, 10),
     "num_residential": np.linspace(200, 320, 10),
-    "num_commercial": np.linspace(10, 120, 10),
+    "num_commercial": np.linspace(20, 120, 10),
     "property_value_dist_mean": np.linspace(0.0, 2.0, 10),
   }
   num_rows = len(variable_parameters.items())
